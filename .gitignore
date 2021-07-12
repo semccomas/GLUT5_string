@@ -1,0 +1,13 @@
+### by default - ignore everything
+* 
+
+
+## Don't ignore .gitignore
+!.gitignore
+!README.md
+
+
+
+## add script directories here
+!GLUT5_atomistic/analysis/scripts/*
+
