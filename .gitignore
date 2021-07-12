@@ -1,6 +1,4 @@
 ### by default - ignore everything
-* 
-
 
 ## Don't ignore .gitignore
 !.gitignore
@@ -9,5 +7,37 @@
 
 
 ## add script directories here
-!GLUT5_atomistic/analysis/scripts/*
+## skip everything in atomistic but analysis
+GLUT5_atomistic/*
+!GLUT5_atomistic/analysis/
 
+GLUT5_atomistic/analysis/*
+!GLUT5_atomistic/analysis/scripts/
+
+
+
+
+## skip everything in ABMD for now
+ABMD/*
+
+#skip homology modeling
+homology_modeling/*
+
+
+## skip everything in steered but scripts in scripts directory. For this one there was a bunch of other stuff in scripts
+steered/*
+!steered/analysis/
+
+steered/analysis/*
+!steered/analysis/scripts/
+
+steered/analysis/scripts/*
+!steered/analysis/scripts/*ipynb
+
+
+# skip everything in string but analysis
+string/*
+!string/analysis/
+
+string/analysis/*
+!string/analysis/scripts/
