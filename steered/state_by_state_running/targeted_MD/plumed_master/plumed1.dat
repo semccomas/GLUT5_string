@@ -1,0 +1,13 @@
+# creates a CV that measures the RMSD from a reference pdb structure
+# the RMSD is measured after OPTIMAL alignment with the target structure
+rmsd: RMSD REFERENCE=OCC.start.heavy.PLUMED_OCC.pdb TYPE=OPTIMAL
+# the movingrestraint. I think this doesn't do anything for the first 5000 steps (10ps) and then pushes quite hard for the remainder of the simulation (until gmx says stop)
+restraint: ...
+        MOVINGRESTRAINT
+        ARG=rmsd
+        AT0=0.0 STEP0=0      KAPPA0=0
+        AT1=0.0 STEP1=5000   KAPPA1=2500
+        AT2=0.0 STEP2=150000  KAPPA2=5000
+...
+# monitor the various restraint outputs - this prints every 10ps 
+PRINT STRIDE=5000 ARG=* FILE=COLVAR_1

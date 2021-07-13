@@ -35,6 +35,16 @@ steered/analysis/scripts/*
 !steered/analysis/scripts/*ipynb
 
 
+#also include plumed info, script is helpful for future things maybe
+!steered/state_by_state_running/
+steered/state_by_state_running/*
+
+!steered/state_by_state_running/targeted_MD/
+steered/state_by_state_running/targeted_MD/*
+
+!steered/state_by_state_running/targeted_MD/plumed_master/
+
+
 # skip everything in string but analysis
 string/*
 !string/analysis/
