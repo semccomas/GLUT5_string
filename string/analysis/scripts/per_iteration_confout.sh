@@ -1,22 +1,6 @@
 #!/bin/bash
 
-# Submit to the tcb partition
-#SBATCH -p tcb
-
-# The name of the job in the queue
-#SBATCH -J conf
-# wall-clock time given to this job
-#SBATCH -t 00:10:00
-
-# Number of nodes and number of MPI processes per node
-#SBATCH -N 1 --ntasks-per-node=4
-
-
-# Output file names for stdout and stderr
-#SBATCH -e error.err -o output.out
-
 module load gromacs/2020.2
-
 
 
 ### the point of this is to combine all beads across one iteration to see how they progress. All beads in one iteration would be one full transition. ie. Inopen --> OutOpen. 
@@ -26,11 +10,12 @@ module load gromacs/2020.2
 trajext='../../../../../2021071200_GLUT5_string_influx_TMD/GLUT5_string/string/string_sims/TMD_initial_path'
 trajdir='influx_apo_gate_CV'
 
-#trajext='../../../../../2021051900_GLUT5_string_efflux_strings/GLUT5_string/string/string_sims'
-#trajdir='efflux_demyst_CV'
+#trajext='../../../../../2021071201_GLUT5_string_efflux_TMD/GLUT5_string/string/string_sims/TMD_initial_path'
+#trajdir='efflux_apo_gate_CV'
 
 
-iteration=0
+
+iteration=10
 max_beads=15
 other_beads_max=$((max_beads-1))
 
