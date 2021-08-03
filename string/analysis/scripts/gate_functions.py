@@ -1,15 +1,22 @@
 
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+
 ## get gate distances as an array
 ## gate_EC and gate_IC shape should be : gate_EC = [(TM1 start,TM1 end), (TM7 start, TM7 end)],
 ## and  gate_IC = [(TM4 start, TM4 end), (TM10 start, TM10 end)]
 
-#quick refs: GLUT5:
+#quick refs: GLUT5: gate_EC = [(30,37), (289,295)], gate_IC = [(136,145), (386,394)]
 # GLUT1: gate_EC = [(29,37), (288,295)], gate_IC = [(137,146), (385,394)]
 # PfHT: gate_EC = [(43,51), (311,318)], gate_IC = [(145,154), (409,418)]
 
 
 def make_gate_arr(md_uni, gate_EC, gate_IC):
     from MDAnalysis.analysis import distances
+    import numpy as np
 
     gate_EC_dists = []
     gate_IC_dists = []
@@ -24,6 +31,8 @@ def make_gate_arr(md_uni, gate_EC, gate_IC):
         gate_EC_dists.append(float(distances.distance_array(tm1, tm7)))
         gate_IC_dists.append(float(distances.distance_array(tm4, tm10)))
     print("returning EC gate, IC gate dists")
+    gate_EC_dists = np.array(gate_EC_dists)
+    gate_IC_dists = np.array(gate_IC_dists)
     return gate_EC_dists, gate_IC_dists
 
 
@@ -33,9 +42,15 @@ def make_gate_arr(md_uni, gate_EC, gate_IC):
 
 
 
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
 
 
 # The idea of this function is that you have several conditions that you would like to compare
+## Just plot distance over time and have both graphs in one plot
 
 ## an example:
 # make_gate_plot(EC_list = [PfHT_EC, apo_EC, GLUT1_EC],\
@@ -45,6 +60,8 @@ def make_gate_arr(md_uni, gate_EC, gate_IC):
 #               figname='../image_figs/gate_dist.GLUT1_vs_PfHT')
 
 def gate_dist_over_time(EC_list, IC_list, label_list, color_list, figsize = (13,6), ylim = (8,17), figname = None):
+    import matplotlib.pyplot as plt 
+
     markersize = 8
     fig, (ax1, ax2) = plt.subplots(nrows = 2, sharex = True, figsize = figsize)
 
@@ -59,7 +76,7 @@ def gate_dist_over_time(EC_list, IC_list, label_list, color_list, figsize = (13,
 
     ## ic gate
     for n, IC in enumerate(IC_list):
-        ax2.plot(IC, label = label_list[n], color = color_dir[label_list[n]])
+        ax2.plot(IC, label = label_list[n], color = color_list[n])
     ax2.set_title("Intracellular gate")
     ax2.set_xlim(0) 
     ax2.set_ylim(ylim)
@@ -86,51 +103,144 @@ def gate_dist_over_time(EC_list, IC_list, label_list, color_list, figsize = (13,
 
 
 
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
 
 
-## This function will plot one condition, as the classic KDE plot for GLUT5 string project format, eg. IC gate on x axis
-## and EC gate on y axis. 
+## This function will load a trajectory, measure gate dist, and plot IC vs EC gate in scatter plot for one condition
+## This is specific to GLUT5 at the moment!! (b/c gate dists)
+
 
 ## an example:
 #indir = '../../state_by_state_running/targeted_MD'
-#plot_comparison(trajdir = f'{indir}/influx_apo_all_heavy', trajname = 'OutOpen-InOpen', label = 'influx_all',\
-#               color = 'green', skip25 = True)
+#uni_to_gate_scatter(trajdir = indir, trajname = 'efflux_apo_gate_CV', ext = '10.string.pdb', color = 'blue')
 
-def plot_comparison(trajdir, trajname, color, a = 0.4, label = None, skip25 = None, highlight_frames = None):
-    if skip25:
-        traj = mda.Universe(f'{trajdir}/{trajname}/{sim_ref_dict[trajname][0]}', f'{trajdir}/{trajname}/{trajname}.skip25.xtc')
-    else:
-        traj = mda.Universe(f'{trajdir}/{trajname}/{sim_ref_dict[trajname][0]}', f'{trajdir}/{trajname}/{trajname}.xtc')
-        
-    gate_EC_dists = []
-    gate_IC_dists = []
-    for timestep in traj.trajectory:
-        tm1,tm7,tm4,tm10 = get_tm_COM(traj)
-        gate_EC_dists.append(float(distances.distance_array(tm1, tm7)) / 10)
-        gate_IC_dists.append(float(distances.distance_array(tm4, tm10))/ 10) #keep in nm
-    gate_EC_dists = np.array(gate_EC_dists)
-    gate_IC_dists = np.array(gate_IC_dists)
 
-    if not highlight_frames:
-        plt.scatter(gate_IC_dists, gate_EC_dists, label=label, alpha = a, color = color)
+def uni_to_gate_scatter(trajdir, trajname, ext, color, a = 0.4, scatter = True, label = None, uni_top = None, highlight_frames = None):
+    import MDAnalysis as mda
+    import matplotlib.pyplot as plt
+    import numpy as np
     
-    if highlight_frames:
-        plt.scatter(gate_IC_dists[highlight_frames], gate_EC_dists[highlight_frames],\
-                    label=label, alpha = 1, color = color, s=100, edgecolor = 'black')
+    
+    ## LOADING DATA
+    if ext.endswith("gro") or ext.endswith("pdb"):
+        traj = mda.Universe(f'{trajdir}/{trajname}.{ext}')
+    if ext.endswith('xtc'):
+        traj = mda.Universe(uni_top, f'{trajdir}/{trajname}.{ext}')
 
-    plt.xlim(0.9,1.82)
+    ## do gate calcs
+    EC, IC = make_gate_arr(traj, gate_EC = [(30,37), (289,295)], gate_IC = [(136,145), (386,394)])
+    
+    ## plot, don't show immediately so you can stack values
+    plot_gate_scatter(EC, IC, label = label, color_list = color, show = False, scatter = scatter)
+
+
+
+
+
+
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+
+## This will plot the EC and IC gates as the usual scatter plot. You can either specify a list of colors, or a colormap
+## which will automatically color each item in the list
+
+# this input should be a numpy array, either 1d or 2d (for several conditions)
+## eg:
+#d = np.array((gate_EC_dists, gate_IC_dists))
+#s = np.array((gate_IC_dists, gate_EC_dists))
+#plot_gate_scatter(s, d, colormap = 'viridis', label = ['r','d']) 
+
+
+
+
+def plot_gate_scatter(EC_arr, IC_arr, scatter = True, label = None, colormap = None, color_list = None, title = None, show = None):
+    import matplotlib.pyplot as plt
+    import numpy as np
+ 
+    if colormap:
+        cmap_vals = plt.cm.get_cmap(colormap)
+        color_vals = cmap_vals(np.linspace(0,1, np.shape(IC_arr)[0]))
+        color_vals = color_vals[::-1]
+    else:
+        color_vals = color_list
+
+    ## need to have separate treatment for multiple gate dists. 
+    ### Seems a bit unneccessary but for coloring this is useful
+    if IC_arr.ndim > 1:
+        for n in range(np.shape(IC_arr)[0]):
+            plt.plot(IC_arr[n]/10.0, EC_arr[n]/10.0, marker = 'o', color = color_vals[n], label = label[n]) 
+
+ 
+   ## now plot for only one pair of dists
+    else:
+            if colormap and scatter:
+                plt.scatter(IC_arr/10.0, EC_arr/10.0, marker = 'o', c = color_vals, cmap = colormap, label = label)
+            elif colormap and not scatter:
+                print("can't plot plt.plot with colormap, set scatter = True!")
+            elif not colormap and scatter:
+                plt.scatter(IC_arr/10.0, EC_arr/10.0, marker = 'o', color = color_vals, label = label) 
+            else:
+               plt.plot(IC_arr/10.0, EC_arr/10.0, marker = 'o', color = color_vals, label = label)
+
+
+
+    plt.xlim(0.9, 1.82)
     plt.ylim(0.74, 1.7)
-    plt.ylabel("Extracellular gate distance (nm)")
-    plt.xlabel("Intracellular gate distance (nm)")
+
+    plt.xlabel("Intracellular gate (nm)")
+    plt.ylabel("Extracellular gate (nm)")
+    plt.title(title)
     plt.legend()
+    if show:
+        plt.show()
 
 
 
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
 
 
+## this will just plot classic RMSD's from MDA in a way that you can compare them
 
+def compare_RMSD(traj_list, label_list = None, color_list = None):
+    import MDAnalysis.analysis.rms
+    import matplotlib.pyplot as plt
+    
+    rmsd_list = []
+    for traj in traj_list:
+        RMSD = MDAnalysis.analysis.rms.RMSD(traj, center = True)
+        RMSD.run(0)
+        rmsd = RMSD.rmsd.T
+        rmsd_list.append(rmsd)
 
+    fig = plt.figure(figsize = (15,5))
 
+    for n, rmsd in enumerate(rmsd_list):
+        time = rmsd[1]
+        if label_list and color_list:
+	        plt.plot(rmsd[2], label = label_list[n], color = color_list[n])
+        elif label_list and not color_list:
+                plt.plot(rmsd[2], label = label_list[n])
+        elif not label_list and color_list:
+                plt.plot(rmsd[2], color = color_list[n])
+        else:
+                plt.plot(rmsd[2])
+
+    plt.legend()
+    plt.xlim(0)
+    plt.ylim(0)
+    
+    plt.xlabel('Iteration #')
+    plt.ylabel('RMSD (A)')
 
 
 

@@ -15,21 +15,30 @@ trajdir='influx_apo_gate_CV'
 
 
 
-iteration=10
+iteration=350
 max_beads=15
 other_beads_max=$((max_beads-1))
 
 ## can make start and stop since they're fixed
-gmx editconf -f $trajext/$trajdir/md/0/0/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.0.pdb -n $trajext/$trajdir/topology/index.ndx -ndef <<EOF 
+##gmx editconf -f $trajext/$trajdir/md/0/0/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.0.pdb -n $trajext/$trajdir/topology/index.ndx -ndef <<EOF 
+
+## use from md/1/1 for topol.tpr. Need TPR to make whole mol (doesn't really matter which topol.tpr I think, they should be more ore less the same)
+gmx trjconv -f $trajext/$trajdir/md/0/0/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.0.pdb -n $trajext/$trajdir/topology/index.ndx -s $trajext/$trajdir/md/1/1/restrained/topol.tpr -pbc whole <<EOF 
+0
+0
 0
 EOF
 
-gmx editconf -f $trajext/$trajdir/md/0/$max_beads/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.$max_beads.pdb -n $trajext/$trajdir/topology/index.ndx -ndef << EOF
+gmx trjconv -f $trajext/$trajdir/md/0/$max_beads/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.$max_beads.pdb -n $trajext/$trajdir/topology/index.ndx -s $trajext/$trajdir/md/1/1/restrained/topol.tpr -pbc whole <<EOF 
+0
+0
 0
 EOF
 
 for i in $(seq 1 $other_beads_max); do 
-gmx editconf -f $trajext/$trajdir/md/$iteration/$i/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.$i.pdb -n $trajext/$trajdir/topology/index.ndx -ndef << EOF
+gmx trjconv -f $trajext/$trajdir/md/$iteration/$i/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.$i.pdb -n $trajext/$trajdir/topology/index.ndx -s $trajext/$trajdir/md/$iteration/$i/restrained/topol.tpr -pbc whole <<EOF 
+0
+0
 0
 EOF
 
