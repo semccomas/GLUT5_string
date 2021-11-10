@@ -59,8 +59,9 @@ def make_gate_arr(md_uni, gate_EC, gate_IC):
 #               color_list = ['red', 'green', 'blue'],\
 #               figname='../image_figs/gate_dist.GLUT1_vs_PfHT')
 
-def gate_dist_over_time(EC_list, IC_list, label_list, color_list, figsize = (13,6), ylim = (8,17), figname = None):
+def gate_dist_over_time(EC_list, IC_list, label_list, color_list, figsize = (13,6), ylim = (8,17), figname = None, trending_line = None):
     import matplotlib.pyplot as plt 
+    import numpy as np
 
     markersize = 8
     fig, (ax1, ax2) = plt.subplots(nrows = 2, sharex = True, figsize = figsize)
@@ -68,6 +69,8 @@ def gate_dist_over_time(EC_list, IC_list, label_list, color_list, figsize = (13,
     ## ec gate
     for n, EC in enumerate(EC_list):
         ax1.plot(EC, label = label_list[n], color = color_list[n])
+        if trending_line:
+            ax1.plot(np.arange(len(EC)), np.ones(len(EC))*np.mean(EC), color = 'black', alpha = 0.5, linewidth = 1)
     ax1.set_title("Extracellular gate")
     ax1.set_xlim(0)
     ax1.set_ylim(ylim)
@@ -77,6 +80,8 @@ def gate_dist_over_time(EC_list, IC_list, label_list, color_list, figsize = (13,
     ## ic gate
     for n, IC in enumerate(IC_list):
         ax2.plot(IC, label = label_list[n], color = color_list[n])
+        if trending_line:
+            ax2.plot(np.arange(len(IC)), np.ones(len(IC))*np.mean(IC), color = 'black', alpha = 0.5, linewidth = 1)
     ax2.set_title("Intracellular gate")
     ax2.set_xlim(0) 
     ax2.set_ylim(ylim)
@@ -160,14 +165,14 @@ def uni_to_gate_scatter(trajdir, trajname, ext, color, a = 0.4, scatter = True, 
 
 
 
-def plot_gate_scatter(EC_arr, IC_arr, scatter = True, label = None, colormap = None, color_list = None, title = None, show = None):
+def plot_gate_scatter(EC_arr, IC_arr, scatter = True, label = None, colormap = None, color_list = None, title = None, show = None, lims = None):
     import matplotlib.pyplot as plt
     import numpy as np
  
     if colormap:
         cmap_vals = plt.cm.get_cmap(colormap)
         color_vals = cmap_vals(np.linspace(0,1, np.shape(IC_arr)[0]))
-        color_vals = color_vals[::-1]
+        #color_vals = color_vals[::-1]
     else:
         color_vals = color_list
 
@@ -190,9 +195,9 @@ def plot_gate_scatter(EC_arr, IC_arr, scatter = True, label = None, colormap = N
                plt.plot(IC_arr/10.0, EC_arr/10.0, marker = 'o', color = color_vals, label = label)
 
 
-
-    plt.xlim(0.9, 1.82)
-    plt.ylim(0.74, 1.7)
+    if not lims:
+        plt.xlim(0.9, 1.82)
+        plt.ylim(0.74, 1.7)
 
     plt.xlabel("Intracellular gate (nm)")
     plt.ylabel("Extracellular gate (nm)")

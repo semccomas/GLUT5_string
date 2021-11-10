@@ -7,20 +7,26 @@ module load gromacs/2020.2
 ## Therefore, the purpose of this script is to compare overall transitions between iterations
 
 
-trajext='../../../../../2021071200_GLUT5_string_influx_TMD/GLUT5_string/string/string_sims/TMD_initial_path'
-trajdir='influx_apo_gate_CV'
+#trajext='../../../../../2021071200_GLUT5_string_influx_TMD/GLUT5_string/string/string_sims/TMD_initial_path'
+#trajdir='influx_apo_gate_CV'
 
-#trajext='../../../../../2021071201_GLUT5_string_efflux_TMD/GLUT5_string/string/string_sims/TMD_initial_path'
-#trajdir='efflux_apo_gate_CV'
+trajext='../../../../../2021071201_GLUT5_string_efflux_TMD/GLUT5_string/string/string_sims/TMD_initial_path/efflux_apo_gate_CV'
+trajdir='efflux_BFRU_start'
+
+#trajext='../../../../../2021091701_GLUT5_string_influx_BFRU_TMD/GLUT5_string/string/string_sims/TMD_initial_path'
+#trajdir='influx_BFRU_gate_CV'
+
+#trajext='../../../../../2021092700_GLUT5_string_efflux_BFRU_TMD/GLUT5_string/string/string_sims/TMD_initial_path'
+#trajdir='efflux_BFRU_gate_CV'
 
 
 
-iteration=350
+
+iteration=1
 max_beads=15
 other_beads_max=$((max_beads-1))
 
 ## can make start and stop since they're fixed
-##gmx editconf -f $trajext/$trajdir/md/0/0/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.0.pdb -n $trajext/$trajdir/topology/index.ndx -ndef <<EOF 
 
 ## use from md/1/1 for topol.tpr. Need TPR to make whole mol (doesn't really matter which topol.tpr I think, they should be more ore less the same)
 gmx trjconv -f $trajext/$trajdir/md/0/0/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.0.pdb -n $trajext/$trajdir/topology/index.ndx -s $trajext/$trajdir/md/1/1/restrained/topol.tpr -pbc whole <<EOF 

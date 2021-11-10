@@ -15,28 +15,30 @@ trajdir='influx_BFRU_gate_CV'
 
 
 
-iteration=5
+iteration=140
 max_beads=15
 other_beads_max=$((max_beads-1))
 
 ## can make start and stop since they're fixed
-gmx editconf -f $trajext/$trajdir/md/0/0/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.0.pdb -ndef <<EOF 
+
+## use from md/1/1 for topol.tpr. Need TPR to make whole mol (doesn't really matter which topol.tpr I think, they should be more ore less the same)
+gmx trjconv -f $trajext/$trajdir/md/0/0/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.0.pdb -s $trajext/$trajdir/md/1/1/restrained/topol.tpr -pbc whole <<EOF
 0
 EOF
 
-gmx editconf -f $trajext/$trajdir/md/0/$max_beads/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.$max_beads.pdb -ndef << EOF
+gmx trjconv -f $trajext/$trajdir/md/0/$max_beads/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.$max_beads.pdb -s $trajext/$trajdir/md/1/1/restrained/topol.tpr -pbc whole <<EOF 
 0
 EOF
 
 for i in $(seq 1 $other_beads_max); do 
-gmx editconf -f $trajext/$trajdir/md/$iteration/$i/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.$i.pdb -ndef << EOF
+gmx trjconv -f $trajext/$trajdir/md/$iteration/$i/restrained/confout.gro -o ../confout_files/pdb_clips/$trajdir.$iteration.$i.pdb  -s $trajext/$trajdir/md/$iteration/$i/restrained/topol.tpr -pbc whole <<EOF 
 0
 EOF
 
 done
 
 ## allow user to use n_beads variable and trajname variable while still going in pdb order
-eval "cat ../confout_files/pdb_clips/$trajdir.$iteration.{0..$max_beads}.pdb > ../confout_files/measure_per_iteration/whole_systems/$trajdir.$iteration.string.pdb"
+eval "cat ../confout_files/pdb_clips/$trajdir.$iteration.{0..$max_beads}.pdb > ../confout_files/measure_per_iteration/$trajdir.$iteration.string.pdb"
 
 
 

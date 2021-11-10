@@ -13,9 +13,9 @@ trajdir='influx_apo_gate_CV'
 
 
 
-bead=11  #choose 1-14 (0 and 15 are fixed...)
+bead=3  #choose 1-14 (0 and 15 are fixed...)
 min_iteration=1
-max_iteration=350
+max_iteration=440
 
 
 for i in $(seq $min_iteration $max_iteration); do 
