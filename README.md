@@ -125,7 +125,7 @@ As you start to get better sampling, you can begin to look at the free energy of
 
 
 
-## 5. Auxillary scripts
+### Auxillary scripts
 * It can be useful to measure the salt-bridge distances across iterations, such as in Figure S6. Use [influx_v_efflux_salt_bridge_for_paper](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/influx_v_efflux_salt_bridge_for_paper.ipynb) for this
 
 
