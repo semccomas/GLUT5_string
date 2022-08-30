@@ -5,11 +5,11 @@ import numpy as np
 from stringmethod.config import *
 from stringmethod.postprocessing import *
 
-plt.rcParams["axes.facecolor"] = "#f9f9fb"
+###plt.rcParams["axes.facecolor"] = "#f9f9fb"
 plt.rcParams["grid.color"] = "white"
 plt.rcParams["grid.linestyle"] = "-"
 plt.rcParams["grid.linewidth"] = 2
-plt.rcParams["axes.grid"] = True
+plt.rcParams["axes.grid"] = False
 plt.rcParams["lines.solid_capstyle"] = "round"
 
 
@@ -273,11 +273,12 @@ def plot_2D_heatmap(
     ylabel="",
     xlim=None,
     ylim=None,
+    colorbar=False
 ):
     import matplotlib as mpl
 
     if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=(10, 7), sharex=True, sharey=True)
+        fig, ax = plt.subplots(1, 1, figsize=(10, 10), sharex=True, sharey=True)
     if cmap is None:
         cmap = plt.cm.RdYlBu_r
     n_colors = 50
@@ -291,7 +292,8 @@ def plot_2D_heatmap(
         vmin=f_min,
         levels=n_colors,
     )
-    _ = _colorbar(ax, cmap, norm, cbar_label, 15)
+    if colorbar:
+        _ = _colorbar(ax, cmap, norm, cbar_label, 15)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.set_xlim(xlim)

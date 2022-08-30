@@ -61,11 +61,20 @@ I used PLUMED for TMD. I wanted to interpolate state-by-state but occasionally t
 
 
 ## 3. String simulations with swarms of trajectories
-### Setting up strings (after beads have been chosen)
-1. 
+### Setting up strings (after beads have been chosen). Scripts are in the [example folder](https://github.com/semccomas/GLUT5_string/tree/master/string/string_sims/TMD_initial_path/influx_BFRU_gate_CV)
+1. Use [steered_confout_dump](https://github.com/semccomas/GLUT5_string/blob/master/string/string_sims/TMD_initial_path/influx_BFRU_gate_CV/steered_confout_dump.sh) to get frames from TMD
+2. Run [input_maker](https://github.com/semccomas/GLUT5_string/blob/master/string/string_sims/TMD_initial_path/influx_BFRU_gate_CV/input_maker.ipynb)
+   - This code has been modified from the [Delemotte lab GitHub] (https://github.com/delemottelab/string-method-swarms-trajectories/tree/master/examples/start-up)
+   - You should already have the `md/0/*` `confout.gro` files from `steered_confout_dump` before running this
+   - Follow startup instructions on Delemotte lab github for more complete info
+3. Check initial string with [analyze_initial_string](https://github.com/semccomas/GLUT5_string/blob/master/string/string_sims/TMD_initial_path/influx_BFRU_gate_CV/analyze_initial_string.ipynb)
+4. Submit string simulations to Beskow with [slurm_string_beskow](https://github.com/semccomas/GLUT5_string/blob/master/string/string_sims/TMD_initial_path/influx_BFRU_gate_CV/slurm_string_beskow.ipynb)
+   - Using the method on Beskow requires the right environment. Again, info can be found on Delemotte lab github as linked above. Environment to set is [environment_update_string_method](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/environment_update_string_method.yml)
 
 ### Measuring string progress
-
+1. This is primarily done with [string_analysis](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/string_analysis.ipynb)
+   - This will check string progress along CV's, and can give a rough FES using detailed balance method
+2. 
 
 ### Free energy surfaces
 

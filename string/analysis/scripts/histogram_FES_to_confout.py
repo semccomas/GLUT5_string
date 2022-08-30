@@ -29,13 +29,20 @@ matplotlib.use('Agg')
 sys.path.append("../../string-method-gmxapi/")
 import string_tica_msm as my_msm
 
-
-
+## HEY!!!
+#### for influx_apo_gate_CV - we use BFRU's F and extent so that
+### each histogram coordinates exactly match. This has the effect that 
+### anywhere that is not energetically favorable for BFRU will not be plotted,
+## so we may have to add more histos later on, but we are mostly 
+## interested in comparing the two conditions, so this is the best way
+## you still PLOT the F of influx apo!! 
 MSM_sim_dir = "../../string_sims/TMD_initial_path/influx_apo_gate_CV"
+F_extent_dir = '../../string_sims/TMD_initial_path/influx_BFRU_gate_CV'
 grid = int(sys.argv[1])
 
-F = np.load(f'{MSM_sim_dir}/F_MSM.npy')
-extent = np.load(f'{MSM_sim_dir}/extent_MSM.npy')
+F = np.load(f'{F_extent_dir}/F_MSM.npy')
+F_for_plotting = np.load(f'{MSM_sim_dir}/F_MSM.npy')
+extent = np.load(f'{F_extent_dir}/extent_MSM.npy')
 cv_proj = np.load(f'{MSM_sim_dir}/cv_proj_MSM.npy')  #IC, EC
 name_sim = 'influx_apo_gate_CV'
 confout_path=f'../confout_files/FES_grids_confouts/{name_sim}/histogram_{grid}'
@@ -185,7 +192,7 @@ cv_labels = ["Intracellular gate (nm)", "Extracellular gate (nm)"]
 xlim = (0.9,1.6)
 ylim = (0.8,1.6)
 fig, ax = my_msm.plot_2D_heatmap(
-    F,
+    F_for_plotting,
     extent,
     f_max=f_max,
     cbar_label="Free Energy (kT)",
