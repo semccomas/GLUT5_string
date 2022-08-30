@@ -1,26 +1,14 @@
-# GLUT5 string simulations project - July 2020 - August 2021
+# GLUT5 string simulations project - July 2020 - September 2022
 
 
 
 # Pipeline:
- - GLUT5 atomistic simulations 
+## 1. GLUT5 atomistic simulations 
+First, simulate each state in conventional MD
+Goal is to see sampling of the 5 states in the CV space, and measure that they are stable
+1. [plot_gate_dists_jupyter.ipynb](https://github.com/semccomas/GLUT5_string/blob/master/GLUT5_atomistic/analysis/scripts/plot_gate_dists_jupyter.ipynb)
+   - Plot gate distances as a kernel density estimation. Add a small point for each starting configuration to see drift
+2. [RMSD_to_model.ipynb](https://github.com/semccomas/GLUT5_string/blob/master/GLUT5_atomistic/analysis/scripts/RMSD_to_model.ipynb)
+   - Calculate RMSD of each simulation to the respective model that they started at
+   - Additional RMSD calculations for relevant features, like ICH5, or protein with no loops
 
-
-# Code annotation
-## GLUT5_atomistic:
-
-
-## steered
-
-
-
-## string:
-### string analysis and free energy surface generation:
-
-### `confout.gro` analysis:
-These scripts are to analyze the actual coordinates of the system during the simulations. Here we can measure how each individual bead is drifing between iterations, or how the overall transition pathway is looking between iterations.
-- Drift of individual beads between iterations:
-
-- Overall transition pathway comparison:
-   - [per_iteration_confout_SLURM](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/per_iteration_confout_SLURM.sh): Edit `trajext`, `trajdir`, `iteration`, and `max_bead` for each simulation. This will read the `confout.gro` file for each bead in the given iteration and then concatenate them into one pdb file. 
-   - Submitting this script to TCB partition is not so necessary, it is a pretty low-level computation
