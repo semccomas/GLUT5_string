@@ -1,6 +1,6 @@
 #!/bin/bash -l
 
-#SBATCH -A 2020-3-28
+#SBATCH -A xxxx-x-xx
 
 #SBATCH -J outocc-occ
 
@@ -9,7 +9,7 @@
 #time in hours
 #SBATCH -t 00:30:00
 
-#SBATCH --mail-user=sarah.mccomas@scilifelab.se --mail-type=BEGIN,END
+#SBATCH --mail-user=email@email.com --mail-type=BEGIN,END
 #SBATCH -e error.log
 #SBATCH -o output.log
 
