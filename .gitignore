@@ -51,3 +51,24 @@ string/*
 
 string/analysis/*
 !string/analysis/scripts/
+string/analysis/scripts/infleCS/InfleCS-free-energy-clustering-tutorial-master/*
+!string/analysis/scripts/infleCS/InfleCS-free-energy-clustering-tutorial-master/*ipynb
+!string/analysis/scripts/infleCS/InfleCS-free-energy-clustering-tutorial-master/*sh
+
+
+string/analysis/scripts/.ipynb_checkpoints
+string/analysis/scripts/old_string_analysis
+
+
+#I want to include some examples of input maker etc
+!string/string_sims/
+string/string_sims/*
+
+!string/string_sims/TMD_initial_path/
+string/string_sims/TMD_initial_path/*
+
+!string/string_sims/TMD_initial_path/influx_BFRU_gate_CV/
+string/string_sims/TMD_initial_path/influx_BFRU_gate_CV/*
+!string/string_sims/TMD_initial_path/influx_BFRU_gate_CV/*sh
+!string/string_sims/TMD_initial_path/influx_BFRU_gate_CV/*ipynb
+

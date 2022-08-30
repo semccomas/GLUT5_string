@@ -56,3 +56,21 @@ I used PLUMED for TMD. I wanted to interpolate state-by-state but occasionally t
    - Older script where I was intially comparing features of the steering/ TMD that I was doing. Not really maintained
 * [feature_selection](https://github.com/semccomas/GLUT5_string/blob/master/steered/analysis/scripts/feature_selection.ipynb)
    - Older script from when I was using demystefying to find CVs. Here I analyzed the CVs dictated important and clustered based on residue groups
+
+
+
+
+## 3. String simulations with swarms of trajectories
+### Setting up strings (after beads have been chosen)
+1. 
+
+### Measuring string progress
+
+
+### Free energy surfaces
+
+
+
+## 4. Analysis of strings and features for paper
+
+
