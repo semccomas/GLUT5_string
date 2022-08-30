@@ -64,7 +64,7 @@ I used PLUMED for TMD. I wanted to interpolate state-by-state but occasionally t
 ### Setting up strings (after beads have been chosen). Scripts are in the [example folder](https://github.com/semccomas/GLUT5_string/tree/master/string/string_sims/TMD_initial_path/influx_BFRU_gate_CV)
 1. Use [steered_confout_dump](https://github.com/semccomas/GLUT5_string/blob/master/string/string_sims/TMD_initial_path/influx_BFRU_gate_CV/steered_confout_dump.sh) to get frames from TMD
 2. Run [input_maker](https://github.com/semccomas/GLUT5_string/blob/master/string/string_sims/TMD_initial_path/influx_BFRU_gate_CV/input_maker.ipynb)
-   - This code has been modified from the [Delemotte lab GitHub] (https://github.com/delemottelab/string-method-swarms-trajectories/tree/master/examples/start-up)
+   - This code has been modified from the [Delemotte lab GitHub](https://github.com/delemottelab/string-method-swarms-trajectories/tree/master/examples/start-up)
    - You should already have the `md/0/*` `confout.gro` files from `steered_confout_dump` before running this
    - Follow startup instructions on Delemotte lab github for more complete info
 3. Check initial string with [analyze_initial_string](https://github.com/semccomas/GLUT5_string/blob/master/string/string_sims/TMD_initial_path/influx_BFRU_gate_CV/analyze_initial_string.ipynb)
