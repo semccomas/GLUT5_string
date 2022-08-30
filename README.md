@@ -4,6 +4,8 @@
 
 # Pipeline:
 ## 1. GLUT5 atomistic simulations 
+
+### Running atomistic
 First, simulate each state in conventional MD
 Goal is to see sampling of the 5 states in the CV space, and measure that they are stable
 1. [plot_gate_dists_jupyter.ipynb](https://github.com/semccomas/GLUT5_string/blob/master/GLUT5_atomistic/analysis/scripts/plot_gate_dists_jupyter.ipynb)
@@ -15,8 +17,8 @@ Goal is to see sampling of the 5 states in the CV space, and measure that they a
    - Found in Figure S2 A, B, C
 
 
-Auxilary scripts:
-1. [analyze_end_states.ipynb](https://github.com/semccomas/GLUT5_string/blob/master/GLUT5_atomistic/analysis/scripts/analyze_end_states.ipynb)
+### Auxilary scripts:
+* [analyze_end_states.ipynb](https://github.com/semccomas/GLUT5_string/blob/master/GLUT5_atomistic/analysis/scripts/analyze_end_states.ipynb)
    - In the end I ran 3 more replicas of the outward open and inward open states to ensure that I had sampled the end states correctly. Here, I just see if any changes occur in other control replicas.
 
 
@@ -29,7 +31,7 @@ Auxilary scripts:
 ## 2. Targeted MD
 
 ### Running steered/ targeted MD
-I used PLUMED for TMD. I wanted to interpolate state-by-state but occasionally this required some extra pushing, and took time to monitor. I developed a simple way to increase the force with every script submitted. Scripts submitted were short and to Beskow, usually 30-40m.
+I used PLUMED for TMD. I wanted to interpolate state-by-state but occasionally this required some extra pushing, and took time to monitor. I developed a simple way to increase the force with every script submitted. Scripts submitted were short and sent to Beskow, usually 30-40m jobs.
 1. [run_TMD.sh](https://github.com/semccomas/GLUT5_string/blob/master/steered/state_by_state_running/targeted_MD/plumed_master/run_TMD.sh)
    - Gmx run file for plumed on Beskow
 2. [plumed1.dat](https://github.com/semccomas/GLUT5_string/blob/master/steered/state_by_state_running/targeted_MD/plumed_master/plumed1.dat)
@@ -50,7 +52,7 @@ I used PLUMED for TMD. I wanted to interpolate state-by-state but occasionally t
 
 
 ### Auxilary scripts:
-1. [steered_analysis](https://github.com/semccomas/GLUT5_string/blob/master/steered/analysis/scripts/steered_analysis.ipynb)
+* [steered_analysis](https://github.com/semccomas/GLUT5_string/blob/master/steered/analysis/scripts/steered_analysis.ipynb)
    - Older script where I was intially comparing features of the steering/ TMD that I was doing. Not really maintained
-2. [feature_selection](https://github.com/semccomas/GLUT5_string/blob/master/steered/analysis/scripts/feature_selection.ipynb)
+* [feature_selection](https://github.com/semccomas/GLUT5_string/blob/master/steered/analysis/scripts/feature_selection.ipynb)
    - Older script from when I was using demystefying to find CVs. Here I analyzed the CVs dictated important and clustered based on residue groups
