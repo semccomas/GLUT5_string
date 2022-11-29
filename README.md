@@ -90,10 +90,14 @@ As you start to get better sampling, you can begin to look at the free energy of
 ## 4. Analysis of strings and features for paper
 ### Histogram grid extraction
 1. [histogram_FES_to_confout](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/histogram_FES_to_confout.py)
-   - I run this on a cluster to speed up. It will **take time** to run this. For ~500 iterations, 16 beads, this took about 4 days. This will parse whatever piece of the histogram you tell it to.
+   - I run this on a cluster to speed up. It will **take time** to run this for all parts of your FES. For ~500 iterations, 16 beads, this took about 4 days. This will parse whatever piece of the histogram you tell it to.
    - In this, it will call [FES_grids_confouts_selection](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/FES_grids_confouts_selection.sh) to get the appropriate confout files from relevant histogram boxes, and collate them into a trajectory
-   - To automate this, I run [run_histogram_FES_to_confout](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/gmx_commands/run_histogram_FES_to_confout.sh). This will just run in order, 1-?? histogram boxes. A lot of this is a bit fragile still and requires a lot of tinkering to work
+   - To automate this, I run [run_histogram_FES_to_confout](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/run_histogram_FES_to_confout.sh). This will just run in order, 1-?? histogram boxes. A lot of this is a bit fragile still and requires a lot of tinkering to work
 2. If you need to align your trajectory on itself (for clustering of sugar poses t.ex.): first run [run_trjconv_for_cluster_on_histogram](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/gmx_commands/run_trjconv_for_cluster_on_histograms.sh)
+
+### Weights from MSM calculation
+1. From the MSM to calculate the energy surface, weights will also be calculated for each frame. These weights are to account for the population biasing you have in the string simulations. **Any** feature that is calculated should account for these weights so that you can more accurately compare to the energy surface. To do this, I find the weight for every "iteration,bead,swarm" `confout` that is dumped into FES_grid_all.xtc (see section above).This is done with the [weights_MSM](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/weights_MSM.ipynb) script. I save the weight just as a np array in each grid's directory. This array is then called in the analysis scripts below, to apply a weight to each `confout` in each grid. 
+
 
 ### Analysis of sugar position
 1. First, sugar poses must be clustered. Use [run_cluster](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/gmx_commands/run_cluster.sh)
