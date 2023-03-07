@@ -117,7 +117,7 @@ As you start to get better sampling, you can begin to look at the free energy of
 
 
 ### Free energy surface plotting
-* [plot_FES_for_paper](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/plot_FES_for_paper.ipynb) Lifts same code from string MSM FES above, just that the F and extent.npy files are saved to disc so that we don't have to calculate the TICA and MSM from scratch. Then, compare to known models.
+* [plot_FES_for_paper](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/plot_FES_for_paper.ipynb) Lifts same code from string MSM FES above, just that the F and extent.npy files are saved to disc so that we don't have to calculate the TICA and MSM from scratch. Then, compare to known models. Plot also the error as calculated in the MSM script.
    - Figure 2D and 2E come from here
 
 
