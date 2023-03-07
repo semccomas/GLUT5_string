@@ -82,7 +82,7 @@ I used PLUMED for TMD. I wanted to interpolate state-by-state but occasionally t
 
 ### Free energy surfaces
 As you start to get better sampling, you can begin to look at the free energy of your system
-1. [string_MSM_analysis](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/string_MSM_analysis_TICs_deep_time-dev.ipynb)
+1. [string_MSM_analysis](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/string_MSM_analysis_TICs_workflow_only.ipynb)
    - Also developed by Delemotte lab, original script can be found on their GitHub. This can also calculate a 1D FES. This is the FES method calculation used in the paper (both 2D and 1D). 
    - This uses [string_tica_msm](https://github.com/semccomas/GLUT5_string/blob/master/string/analysis/scripts/string_tica_msm.py) as a function to call
 
